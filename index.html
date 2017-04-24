@@ -7,7 +7,7 @@
 		<title>reveal.js</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/mystyle.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,8 +24,47 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section data-background-color="#fff">
+					<img src="images/logo.png">
+					<h2>Vue.js入门</h2>
+					<small style="-webkit-writing-mode: vertical-rl;">叶潘孟</small>
+					<p>2017-4-24</p>
+				</section>
+				<section>
+					<section>
+						<h1>SPA <span class="fragment">?</span></h1>
+						<p class="fragment">Single-Page Application</p>
+						<p class="fragment">单页Web应用，是一种只有一个web页面的网页应用程序或网站。在一个单页面应用中，HTML、JavaScript、CSS都在第一次页面加载中获取，或者通常根据用户动作<span class="fragment highlight-red">动态加载</span>合适的资源并按需要加入到网页中。</p>
+					</section>
+					<section data-transition="fade">
+						<h2>23</h2>
+						<p class="fragment">内容1</p>
+						<p class="fragment">内容2</p>
+						<p class="fragment">内容3</p>
+						<p class="fragment">内容4</p>
+					</section>
+				</section>
+
+				<section data-transition="zoom">
+					<pre>
+						<code data-trim>
+							new Vue(() => {
+
+							})
+						</code>
+					</pre>
+				</section>
+				<section data-transition="fade">
+					<!-- <h2>Slide 3</h2> -->
+					<aside class="notes">
+						这里是猪食
+					</aside>
+				</section>
+				<section data-transition="concave">
+					<p>Talking is cheap,</p>
+					<p>show me your code.</p>
+				</section>
+				<section data-transition="convex">Slide 5</section>
 			</div>
 		</div>
 
@@ -36,7 +75,8 @@
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				history: true,
-
+				// 是否显示当前幻灯片的页数 
+    			slideNumber: 'c/t',
 				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
