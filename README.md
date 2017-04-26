@@ -2,5 +2,11 @@
 
 > index.html 为入口HTML
 
-未引入全部功能，仅做Demo，可正常访问。
+### 未引入全部功能，仅做Demo，可正常访问。
+
+### gh-pages 分支跑demo，可在个人pages访问
+
+### master分支是revealJs完整工程
+
+[demo地址](http://palmerye.online/demos-Reveal.js/)
 
