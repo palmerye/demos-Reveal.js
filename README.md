@@ -1,21 +1,6 @@
-1. Clone the reveal.js repository
-   ```sh
-   $ git clone https://github.com/palmerye/demos-Reveal.js.git
-   ```
+## 基于RevealJs的Vue.js 演示文档
 
-2. Navigate to the reveal.js folder
-   ```sh
-   $ cd reveal.js
-   ```
+> index.html 为入口HTML
 
-3. Install dependencies
-   ```sh
-   $ npm install
-   ```
+未引入全部功能，仅做Demo，可正常访问。
 
-4. Serve the presentation and monitor source files for changes
-   ```sh
-   $ npm start
-   ```
-
-5. Open <http://localhost:8000> to view your presentation
