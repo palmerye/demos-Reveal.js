@@ -1,3 +1,5 @@
+### master分支是revealjs的完整工程，demo请看gh-pages分支
+
 1. Clone the reveal.js repository
    ```sh
    $ git clone https://github.com/palmerye/demos-Reveal.js.git
