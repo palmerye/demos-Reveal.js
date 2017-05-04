@@ -7,7 +7,7 @@
 		<title>reveal.js</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/mystyle.css">
+		<link rel="stylesheet" href="css/theme/black.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,269 +24,16 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<!-- 封面 -->
-				<section data-background-color="#fff">
-					<img src="images/u+hik.png" class="uplus-hik">
-					<img src="images/logo.png">
-					<h2>Vue.js入门</h2>
-					<small class="author-name">叶潘孟</small>
-					<p>2017-4-26</p>
+				<section>
+					<p>1</p>
 				</section>
-				<!-- SPA介绍及前后端分离 -->
 				<section>
 					<section>
-						<h1>SPA <span class="fragment">?</span></h1>
-						<p class="fragment">Single-Page Application</p>
-						<p class="fragment">单页Web应用，是一种只有一个web页面的网页应用程序或网站。在一个单页面应用中，HTML、JavaScript、CSS都在第一次页面加载中获取，或者通常根据用户动作<span class="fragment highlight-red">动态加载</span>合适的资源并<span class="fragment highlight-red">按需</span>加入到网页中。</p>
-						<p class="fragment">单页Web程序的出现是<span class="fragment highlight-red">富客户端</span>发展的必然结果</p>
-					</section>
-					<section data-transition="fade">
-						<h3>单页面应用的<span class="fragment highlight-red">优点</span></h3>
-						<ul>
-							<li class="fragment">1.良好的交互体验</li>
-							<li class="fragment">2.减轻服务器压力</li>
-							<li class="fragment">3.分离前后端关注点</li>
-							<li class="fragment">4.结合RESTful架构，后端API多端通用</li>
-							<li class="fragment">5.告别切图仔！！！</li>
-						</ul>
-					</section>
-					<section data-transition="zoom">
-						<h3>单页面应用的<span class="fragment highlight-red">缺点</span></h3>
-						<ul>
-							<li class="fragment">1.首屏加载耗时</li>
-							<li class="fragment">2.不利于SEO</li>
-							<li class="fragment">3.开发、学习成本较高</li>
-						</ul>
-					</section>
-					<section data-transition="concave">
-						<div>
-							<img src="images/nofl.png">
-						</div>
-						<div>
-							<img src="images/fl.png">
-						</div>
-					</section>
-				</section>
-				<!-- 框架发展 -->
-				<section>
-					<section>
-						<h2>前端框架发展</h2>
-						<img src="images/fe-kj.jpg">
-					</section>
-					<!-- angular -->
-					<section>
-						<h2><img src="images/ng-logo.png" class="middleImg"> AngularJs</h2>
-						<p><img src="images/ag-star.png"></p>
-						<div>
-							<p class="fragment">AngularJS诞生于2009年，由Misko Hevery 等人创建，后为Google所收购，已经被用于Google的多款产品当中。AngularJS有着诸多特性，最为核心的是：MVC、模块化、自动化双向数据绑定、语义化标签、依赖注入等等</p>
-						</div>
+						<p>2.1</p>
 					</section>
 					<section>
-						<h2>语法特点</h2>
-						<pre>
-							<code data-trim>
-								<!doctype html>
-								<html ng-app>
-								  <head>
-								    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-								  </head>
-								  <body>
-								    <div>
-								      <label>Name:</label>
-								      <input type="text" ng-model="yourName" placeholder="Enter a name here">
-								      <hr>
-								      <p>Hello { { yourName } }</p>
-								    </div>
-								  </body>
-								</html>
-							</code>
-						</pre>
+						<p>2.2</p>
 					</section>
-					<!-- react -->
-					<section>
-						<h2><img src="images/react-logo.svg" style="width: 100px;" class="middleImg"> React</h2>
-						<p><img src="images/react-star.png"></p>
-						<div>
-							<p class="fragment">React 起源于 Facebook 的内部项目，因为该公司对市场上所有 JavaScript MVC 框架，都不满意，就决定自己写一套，用来架设 Instagram 的网站。做出来以后，发现这套东西很好用，就在2013年5月开源了。</p>
-						</div>
-					</section>
-					<section>
-						<h2>ReactDOM.render()</h2>
-						<pre>
-							<code data-trim>
-								var names = ['Alice', 'Emily', 'Kate'];
-								ReactDOM.render(
-								  <div>
-								  {
-								    names.map(function (name) {
-								      return <div>Hello, {name}!</div>
-								    })
-								  }
-								  </div>,
-								  document.getElementById('example')
-								);
-							</code>
-						</pre>
-						<small class="fragment">JSX语法：HTML 语言直接写在 JavaScript 中，不加任何引号</small>
-					</section>
-				</section>
-				<!-- vue介绍 -->
-				<section data-transition="zoom" data-background-color="#fff">
-					<img src="images/logo.png">
-					<p><img src="images/vue-star.png"></p>
-					<img src="images/vue-jr.svg">
-				</section>
-				<!-- 作者介绍 -->
-				<section data-transition="fade">
-					<section>
-						<img src="images/yyx.jpg" style="width: 200px;">
-						<p>Vue.js作者：尤雨溪</p>
-						<ul>							
-							<li class="fragment">本科毕业于Colgate University</li>
-							<li class="fragment">后在Parsons设计学院获得Design & Technology艺术硕士学位</li>
-							<li class="fragment">现任职于纽约Google Creative Lab</li>
-						</ul>
-					</section>
-					<section>
-						<h3>开发初衷</h3>
-						<div>
-							<span class="fragment highlight-current-blue">AngularJs设计繁琐，学习陡峭 --></span>
-							<span class="fragment highlight-current-blue">数据绑定原理，造轮子 --></span>
-							<span class="fragment highlight-current-blue">用户界面用嵌套的组件树描述 --></span>
-							<span class="fragment highlight-current-blue">每个组件对于MVVM中的ViewModel --></span>
-							<span class="fragment highlight-current-blue">数据驱动的组件系统</span>
-						</div>
-					</section>
-				</section>
-				<!-- 原理介绍 -->
-				<section data-transition="fade">
-					<section data-transition="slide-in fade-out">
-						<h3>MVVM数据绑定</h3>
-						<img src="images/vue-mvvm.jpg">
-						<p class="fragment">MVVM的本质是通过数据绑定链接View和Model，让数据的变化自动映射为视图的更新</p>
-					</section>
-					<section>
-						<pre>
-							<code data-trim>
-							<div id="app">{ { message} }</div>
-							</code>
-						</pre>
-						<pre>
-							<code data-trim>
-							var app = new Vue({
-							  el: '#app',
-							  data: {
-							    message: 'Hello Vue!'
-							  }
-							})
-							</code>
-						</pre>
-					</section>
-					<section>
-						<h3>Vue常用指令</h3>
-						<pre>
-							<code data-trim>
-							<div v-if="Math.random() > 0.5">Now you see me</div>
-							<div v-else>Now you don't</div>
-							</code>
-						</pre>
-						<pre>
-							<code data-trim>
-							<div v-for="item in items">{ { item.text } }</div>
-							</code>
-						</pre>
-						<pre>
-							<code data-trim>
-							<!-- 方法处理器 -->
-							<button v-on:click="doThis"></button>
-							<button @click="doThis"></button>
-							<!-- 绑定一个属性 -->
-							<img v-bind:src="imageSrc">
-							<div :class="{ red: isRed }"></div>
-							</code>
-						</pre>
-					</section>
-					<section>
-						<h3>数据观测的实现</h3>
-						<img src="images/vue-watch.jpg">
-						<p>Vue.js利用了ES5的Object.defineProperty方法，直接将原生数据对象的属性改造为getter和setter，在这两个函数内部实现依赖的收集和触发</p>
-					</section>
-					<section>
-						<h3>Vue组件系统</h3>
-						<img src="images/vue-com.jpg">
-						<p>组件（Component）是 Vue.js 最强大的功能之一。组件可以扩展 HTML 元素，封装可重用的代码。在较高层面上，组件是自定义元素， Vue.js 的编译器为它添加特殊功能。在有些情况下，组件也可以是原生 HTML 元素的形式，以 is 特性扩展。</p>
-					</section>
-					<section>
-						<pre>
-							<code data-trim>
-							<div id="example">
-								<my-component></my-component>
-							</div>
-
-							// 注册
-							Vue.component('my-component', {
-							  template: '<div>A custom component!</div>'
-							})
-							// 创建根实例
-							new Vue({
-							  el: '#example'
-							})
-							</code>
-						</pre>
-						<pre>
-							<code data-trim>
-							<!-- 渲染为 -->
-							<div id="example">
-								<div>A custom component!</div>
-							</div>
-							</code>
-						</pre>
-					</section>
-				</section>
-				<!-- 生态 -->
-				<section data-transition="concave">
-					<h3>框架生态</h3>
-					<ul>	
-						<li class="fragment grow">路由系统：Vue-router</li>	
-						<li class="fragment grow">状态管理：Vuex</li>
-						<li class="fragment grow">数据请求：Vue-resource/axios</li>
-						<li class="fragment grow">脚手架：Vue-cli</li>
-						<li class="fragment grow">资源库：awesome-vue</li>
-					</ul>
-				</section>
-				<!-- UI库 -->
-				<section data-transition="concave">
-					<p>UI组件库</p>
-					<section>
-						<h3>移动端</h3>
-						<p>vux</p>
-						<img src="images/vux.png">
-					</section>
-					<section>
-						<h3>PC端</h3>
-						<p>Element UI</p>
-						<p>iview</p>
-					</section>
-				</section>
-				<!-- 工程目录演示 -->
-				<section data-transition="convex">
-					<p>Talking is cheap,</p>
-					<p>Show me your code.</p>
-				</section>
-
-				<section data-transition="convex">
-					<ul>
-						<li class="fragment highlight-current-red">Weex：用Vue.js通三端（iOS、Android、HTML5）</li>
-						<li class="fragment highlight-current-red">PWA（Progressive Web App）</li>
-						<li class="fragment highlight-current-red">微信小程序</li>
-						<li class="fragment highlight-current-red">WebGL、Web VR</li>
-						<li class="fragment highlight-current-red">More...</li>
-					</ul>
-				</section>
-				<section data-transition="convex">
-					<p class="fragment fade-up current-visible">听说JS要统治世界了？</p>
-					<p class="fragment fade-up current-visible">开个玩笑</p>
-					<p class="fragment fade-up current-visible">Thanks！</p>
 				</section>
 			</div>
 		</div>
@@ -298,8 +45,6 @@
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				history: true,
-				// 是否显示当前幻灯片的页数 
-    			slideNumber: 'c/t',
 				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
