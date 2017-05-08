@@ -36,6 +36,9 @@
 
 ## 持续更新中....
 
+- 一个使用 `HTML` 轻松创建精美的演示文稿框架，你只要有一个支持 `CSS 3D` 切换的浏览器(拥抱Chrome, 拒绝IE)。点击查看 [Demo](http://lab.hakim.se/reveal-js/)
+- reveal.js 配备了广泛的功能，包括嵌套幻灯片，`Markdown` 内容，`PDF` 导出，演讲笔记和 `JavaScript` API。还有一个全功能的可视化编辑器和平台,可生成在线的slide地址,有免费版和收费版：[slides.com](https://slides.com/)。
+
 ---
 
 # reveal.js EN
