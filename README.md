@@ -39,6 +39,29 @@
 - 一个使用 `HTML` 轻松创建精美的演示文稿框架，你只要有一个支持 `CSS 3D` 切换的浏览器(拥抱Chrome, 拒绝IE)。点击查看 [Demo](http://lab.hakim.se/reveal-js/)
 - reveal.js 配备了广泛的功能，包括嵌套幻灯片，`Markdown` 内容，`PDF` 导出，演讲笔记和 `JavaScript` API。还有一个全功能的可视化编辑器和平台,可生成在线的slide地址,有免费版和收费版：[slides.com](https://slides.com/)。
 
+## 内容列表
+
+- [在线编辑](#在线编辑)
+- [说明](#说明)
+  - [结构](#结构)
+  - [Markdown](#markdown-CH)
+  - [元素属性](#元素属性)
+  - [Slide属性](#Slide属性)
+- [配置](#配置)
+- [尺寸](#尺寸)
+- [依赖](#依赖)
+- 
+
+## 更多功能
+
+- [更新日志](https://github.com/hakimel/reveal.js/releases): 获取最新版本.
+- [例子](https://github.com/hakimel/reveal.js/wiki/Example-Presentations): 这里有一些基于`reveal.js`的演示例子,也欢迎PR,提供属于你自己的个性例子!
+- [浏览器支持](https://github.com/hakimel/reveal.js/wiki/Browser-Support): 浏览器兼容情况.
+- [插件](https://github.com/hakimel/reveal.js/wiki/Plugins,-Tools-and-Hardware): 扩展`reveal.js`功能的插件列表.
+
+## 在线编辑
+
+演示文档是使用 `HTML` 或者 `Markdown` 编写的，如果你们更喜欢图形界面的在线编辑器，点击 [https://slides.com](https://slides.com?ref=github) 尝试一下。
 ---
 
 # reveal.js EN
