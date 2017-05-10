@@ -80,7 +80,7 @@
 - [复用插件](#复用插件)
   - [主演示文稿](#主演示文稿)
   - [客户端演示文稿](#客户端演示文稿)
-  - [socket.io 服务器](#socket.io 服务器)
+  - [socket.io 服务器](#socket.io-服务器)
 - [MathJax](#MathJax-CH)
 - [安装](#安装)
   - [基本设置](#基本设置)
@@ -97,6 +97,43 @@
 ## 在线编辑
 
 演示文档是使用 `HTML` 或者 `Markdown` 编写的，如果你们更喜欢图形界面的在线编辑器，点击 [https://slides.com](https://slides.com?ref=github) 尝试一下。
+
+## 说明
+
+这里有一个简单的例子,充分展示了reveal.js的演示文档结构.
+```html
+<html>
+   <head>
+      <link rel="stylesheet" href="css/reveal.css">
+      <link rel="stylesheet" href="css/theme/white.css">
+   </head>
+   <body>
+      <div class="reveal">
+         <div class="slides">
+            <section>Slide 1</section>
+            <section>Slide 2</section>
+         </div>
+      </div>
+      <script src="js/reveal.js"></script>
+      <script>
+         Reveal.initialize();
+      </script>
+   </body>
+</html>
+```
+
+举个例子:
+```html
+<div class="reveal">
+   <div class="slides">
+      <section>Single Horizontal Slide</section>
+      <section>
+         <section>Vertical Slide 1</section>
+         <section>Vertical Slide 2</section>
+      </section>
+   </div>
+</div>
+```
 ---
 
 # reveal.js EN
