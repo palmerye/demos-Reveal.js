@@ -44,7 +44,7 @@
 - [在线编辑](#在线编辑)
 - [说明](#说明)
   - [结构](#结构)
-  - [Markdown](#markdown-CH)
+  - [Markdown](#markdown.)
   - [元素属性](#元素属性)
   - [Slide属性](#Slide属性)
 - [配置](#配置)
@@ -122,7 +122,7 @@
 </html>
 ```
 
-举个例子:
+演示文档的标签结构需要 `.reveal > .slides > section` 包含，一个 `section` 表示一个 `slide` 而且可以无限重复。如果你在一个 `section` 标签里包含了多个 `section`，那么这几个 `section` 就会垂直分布（意思就是你需要上下切换 `slide`），第一个垂直的 `slide` 位于其它 `slide` 的顶部，同时也是包含在水平 `slide` 序列中。举个例子:
 ```html
 <div class="reveal">
    <div class="slides">
@@ -134,6 +134,24 @@
    </div>
 </div>
 ```
+
+## Markdown.
+
+`reveal.js` 支持 `Markdown` 来实现内容。使用 Markdown 实现内容时，需要在 `section` 标签中添加 `data-markdown` 属性，然后将 `Markdown` 内容写到一个 `text/template` 脚本中，如下例。
+
+> 这是基于 [Paul Irish](https://gist.github.com/1343518) 为了支持 [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown) 而修改的 [data-markdown](https://gist.github.com/1343518)，所以对缩进和换行符都是敏感的，应该避免tabs和空格混用，也要注意换行的使用。 
+
+```html
+<section data-markdown>
+   <script type="text/template">
+      ## Page title
+
+      A paragraph with some text and a [link](http://hakim.se).
+   </script>
+</section>
+```
+
+
 ---
 
 # reveal.js EN
