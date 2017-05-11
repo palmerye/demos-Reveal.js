@@ -150,7 +150,218 @@
    </script>
 </section>
 ```
+### 外部 Markdown 文件
 
+可以把 Markdown 内容写在外部文件里，在 reveal.js 运行时进行加载。 引用外部文件时可设置的参数：
+
+- `data-separator` 定义划分横向幻灯片的规则（默认值为 `^\r?\n---\r?\n$`)
+- `data-separator-vertical` 定义划分纵向幻灯片的规则（默认禁用）
+- `data-separator-notes` 定义当前幻灯片的演讲备注 (默认值为 `note:`)
+- `data-charset` 定义外部文件加载时使用的字符集
+
+如果要在本地使用该特性，演示文稿需要运行在[本地服务器上](#full-setup)
+
+```html
+<section data-markdown="example.md"  
+         data-separator="^\n\n\n"  
+         data-separator-vertical="^\n\n"  
+         data-separator-notes="^Note:"  
+         data-charset="iso-8859-15">
+</section>
+```
+
+### 元素属性
+
+在 Markdown 内容中，可以通过 html 注释来添加元素属性，如分段：
+
+```html
+<section data-markdown>
+   <script type="text/template">
+      - 列表项 1 <!-- .element: class="fragment" data-fragment-index="2" -->
+      - 列表项 2 <!-- .element: class="fragment" data-fragment-index="1" -->
+   </script>
+</section>
+```
+
+### 幻灯片属性
+
+html 注释也可以用来添加幻灯片 `<section>` 元素的属性。
+
+```html
+<section data-markdown>
+   <script type="text/template">
+   <!-- .slide: data-background="#ff0000" -->
+      Markdown 内容
+   </script>
+</section>
+```
+
+### 配置 *marked*
+
+reveal.js 使用 [marked](https://github.com/chjj/marked) 来解析 Markdown，可在设置[reveal 配置](#configuration) 时传入 marked 的配置：
+
+```javascript
+Reveal.initialize({
+   // 传入 marked 的配置
+   // 参考 https://github.com/chjj/marked#options-1
+   markdown: {
+      smartypants: true
+   }
+});
+```
+
+## 配置
+
+需在页面底部初始化 reveal，所有配置项均为可选，默认值如下：
+
+```javascript
+Reveal.initialize({
+
+    // 在右下角显示控制面板
+    controls: true,
+
+    // 显示演示进度条
+    progress: true,
+
+    // 显示幻灯片页码
+    // 可使用代码 slideNumber: 'c/t'，表示 '当前页/总页数'
+    slideNumber: false,
+
+    // 幻灯片切换时写入浏览器历史记录
+    history: false,
+
+    // 启用键盘快捷键
+    keyboard: true,
+
+    // 启用幻灯片概览
+    overview: true,
+
+    // 幻灯片垂直居中
+    center: true,
+
+    // 在触屏设备上启用触摸滑动切换
+    touch: true,
+
+    // 循环演示
+    loop: false,
+
+    // 演示方向为右往左，即向左切换为下一张，向右切换为上一张
+    rtl: false,
+
+    // 打乱幻灯片顺序
+    shuffle: false,
+
+    // 启用幻灯片分段
+    fragments: true,
+
+    // 演示文稿是否运行于嵌入模式（如只占页面的一部分）
+    // 译者注：与触屏相关
+    // false：所有在演示文稿上触发的 "touchmove" 的默认行为都会被阻止
+    // true：只有在 "touchmove" 触发了演示文稿事件时才会阻止默认行为
+    embedded: false,
+
+    // 是否在按下 ? 键时显示快捷键帮助面板
+    help: true,
+
+    // 演讲备注是否对所有人可见
+    showNotes: false,
+
+    // 两个幻灯片之间自动播放的时间间隔（毫秒），当设置为 0 时，则禁止自动播放。
+    // 该值可以被幻灯片上的 `data-autoslide` 属性覆盖
+    autoSlide: 0,
+
+    // 允许停止自动播放
+    // 在手动切换分段或幻灯片后暂停自动播放
+    // 按 a 键暂停或恢复自动播放
+    autoSlideStoppable: true,
+
+    // 使用该函数执行自动播放操作
+    autoSlideMethod: Reveal.navigateNext,
+
+    // 启用鼠标滚轮切换幻灯片，作用与 SPACE 相同
+    mouseWheel: false,
+
+    // 在移动设备上隐藏地址栏
+    hideAddressBar: true,
+
+    // 在 iframe 预览弹框中打开链接
+    previewLinks: false,
+
+    // 切换过渡效果
+    // none-无/fade-渐变/slide-飞入/convex-凸面/concave-凹面/zoom-缩放
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // 切换过渡速度
+    // default-中速/fast-快速/slow-慢速
+    transitionSpeed: 'default', // default/fast/slow
+
+    // 背景切换过渡效果
+    backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+    // 预加载幻灯片数
+    viewDistance: 3,
+
+    // 视差背景图
+    parallaxBackgroundImage: '', // 示例："'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+    // 视察背景图尺寸
+    parallaxBackgroundSize: '', // CSS 写法，示例："2100px 900px"（目前只支持像素值，不支持 % 和 auto）
+
+    // 相邻两张幻灯片间，视差背景移动的像素值
+    // - 如果不设置则自动计算
+    // - 当设置为 0 时，则禁止视差动画
+    parallaxBackgroundHorizontal: null,
+    parallaxBackgroundVertical: null
+
+});
+```
+在执行初始化后，可通过 configure 方法来更新配置：
+
+```javascript
+// 关闭自动播放
+Reveal.configure({ autoSlide: 0 });
+
+// 开启自动播放（时间间隔为 5 秒）
+Reveal.configure({ autoSlide: 5000 });
+```
+
+## 演示文稿尺寸
+
+演示文稿有一个标准尺寸，框架会在其基础上自动缩放以适应各种分辨率。
+
+尺寸相关的配置项及其默认值如下：
+```javascript
+Reveal.initialize({
+
+  ...
+
+  // 演示文稿缩放时，会保持标准尺寸的宽高比。
+  // 可使用百分比，如：'200%'
+  width: 960,
+  height: 700,
+
+  // 内容外边距
+  margin: 0.1,
+
+  // 内容缩放比例的最小值/最大值
+  minScale: 0.2,
+  maxScale: 1.5
+
+});
+```
+如果想要使用自定义的缩放方式（如使用媒体查询），可通过下面的设置来禁用自动缩放：
+```javascript
+Reveal.initialize({
+
+  ...
+
+  width: "100%",
+  height: "100%",
+  margin: 0,
+  minScale: 1,
+  maxScale: 1
+});
+```
 
 ---
 
