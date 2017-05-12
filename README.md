@@ -639,6 +639,65 @@ Reveal.addEventListener( 'somestate', function() {
 
 背景切换的默认过渡效果为 fade（渐变），可在初始化 ```Reveal.initialize()``` 时传入 ```backgroundTransition``` 配置项来修改，也可给 `<section>` 添加 ```data-background-transition``` 属性来给个别幻灯片单独设置。
 
+### 视差背景
+
+要使用视差滚动背景，需要在初始化 reveal.js 时设置下面的前两个配置项（后两个为可选项）。
+
+```javascript
+Reveal.initialize({
+
+    // 视差背景图
+    parallaxBackgroundImage: '', // 示例："'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+    // 视察背景图尺寸
+    parallaxBackgroundSize: '', // CSS 写法，示例："2100px 900px"（目前只支持像素值，不支持 % 和 auto）
+
+    // 相邻两张幻灯片间，视差背景移动的像素值
+    // - 如果不设置则自动计算
+    // - 当设置为 0 时，则禁止视差动画
+    parallaxBackgroundHorizontal: 200,
+    parallaxBackgroundVertical: 50
+
+});
+```
+
+视差背景图尺寸必须大于幻灯片尺寸，否则切换幻灯片时无法滚动。[查看示例](http://lab.hakim.se/reveal-js/?parallaxBackgroundImage=https%3A%2F%2Fs3.amazonaws.com%2Fhakim-static%2Freveal-js%2Freveal-parallax-1.jpg&parallaxBackgroundSize=2100px%20900px)
+
+
+
+
+### 切换过渡效果
+幻灯片的切换过渡效果，默认使用配置项 ```transition``` 设置的值，可通过 ```data-transition``` 属性来给个别幻灯片单独指定过渡效果：
+
+```html
+<section data-transition="zoom">
+  <h2> 该幻灯片不使用全局的切换过渡效果，而是单独指定的缩放！ </h2>
+</section>
+
+<section data-transition-speed="fast">
+  <h2> 可供选择的切换过渡速度有：default-中速、fast-快速、slow-慢速！ </h2>
+</section>
+```
+
+甚至可以给同一张幻灯片指定不同的切入和切出过渡效果：
+
+```html
+<section data-transition="slide">
+    没时间解释了快上车……
+</section>
+<section data-transition="slide">
+    继续前进……
+</section>
+<section data-transition="slide-in fade-out">
+    到站停车。
+</section>
+<section data-transition="fade-in slide-out">
+    （乘客上车和下车）
+</section>
+<section data-transition="slide">
+    重新上路。
+</section>
+```
 
 ---
 
