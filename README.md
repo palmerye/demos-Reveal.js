@@ -362,6 +362,283 @@ Reveal.initialize({
   maxScale: 1
 });
 ```
+## 依赖
+
+Reveal.js 的部分功能需要引入自带的第三方库，可在初始化时传入依赖项，运行时会自动加载。
+
+```javascript
+Reveal.initialize({
+  dependencies: [
+    // classList 跨浏览器支持 - https://github.com/eligrey/classList.js/
+    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+
+    // 解析 <section> 元素里的 Markdown 内容
+    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+
+    // <code> 元素语法高亮
+    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+
+    // Alt+click 缩放点击元素
+    { src: 'plugin/zoom-js/zoom.js', async: true },
+
+    // 演讲备注
+    { src: 'plugin/notes/notes.js', async: true },
+
+    // 数学公式
+    { src: 'plugin/math/math.js', async: true }
+  ]
+});
+```
+自定义库也可以使用该方式加载。
+依赖项属性：
+- **src**: 脚本路径
+- **async**: [可选] 异步，是否允许 reveal.js 执行后再加载脚本，默认值为 false
+- **callback**: [可选] 回调函数，脚本加载完成后执行
+- **condition**: [可选] 条件函数，返回 true 时才会加载脚本
+
+要使用该方式来加载依赖项，需在引入 reveal.js 之前引入 [head.js](http://headjs.com/) *(提供加载脚本功能的库)*。
+
+## 准备完成事件
+
+reveal.js 在所有非异步依赖加载完成，准备播放时，会广播 'ready' 事件。
+可调用 `Reveal.isReady()` 函数来检查 reveal.js 是否已准备完成。
+
+```javascript
+Reveal.addEventListener( 'ready', function( event ) {
+  // event.currentSlide, event.indexh, event.indexv
+} );
+```
+
+reveal.js 准备完成时会给 `.reveal` 元素增加 `.ready` 类，也可以此来判断是否已准备完成。
+
+## 自动播放
+
+演示文稿可以设置为自动播放，只需告诉框架自动切换的时间间隔（毫秒）：
+
+```javascript
+// 每 5 秒自动切换下一张幻灯片
+Reveal.configure({
+  autoSlide: 5000
+});
+```
+
+在手动切换分段或幻灯片后会暂停自动播放，也可以按 a 键来暂停或恢复自动播放。
+设置 ```autoSlideStoppable: false``` 后，用户操作则不会打断自动播放。
+
+也可以通过 ```data-autoslide``` 属性来给个别幻灯片或分段重新设置时间间隔:
+
+```html
+<section data-autoslide="2000">
+  <p class="fragment"> 2 秒后第一个分段会自动显示 </p>
+  <p class="fragment" data-autoslide="10000"> 10 秒后下一个分段会自动显示 </p>
+  <p class="fragment"> 2 秒后会自动切换到下一张幻灯片 </p>
+</section>
+```
+
+通过设置 ```autoSlideMethod``` 指定自动播放的方式，如设置为 ```Reveal.navigateRight```，则自动播放时纵向幻灯片只会播放主幻灯片，其它纵向幻灯片会被忽略。
+
+自动播放被暂停和恢复时，会广播 ```autoslidepaused``` 和 ```autoslideresumed``` 事件。
+
+## 自定义快捷键
+
+如果不喜欢默认的快捷键，可通过 ```keyboard``` 配置项来自定义：
+
+```javascript
+Reveal.configure({
+  keyboard: {
+    13: 'next', // 按 ENTER 键切换到下一个分段或幻灯片
+    27: function() {}, // 按 ESC 键时触发自定义行为
+    32: null // 按 SPACE 时不做任何处理（可用于禁用 reveal.js 的默认快捷键）
+  }
+});
+```
+
+## 触屏操作
+
+在触屏设备上可以通过滑动来操作幻灯片，水平滑动切换横向幻灯片，垂直滑动切换纵向幻灯片。
+设置 ```touch: false`` 可禁用触屏操作。
+
+如果幻灯片内容本身带有滑动操作（比如滚动内容），需要给元素添加 `data-prevent-swipe` 属性来阻止默认的滑动行为。
+
+
+## 延迟加载
+
+当演示文稿中带有大量的多媒体或 iframe 内容时，延迟加载就显得尤为重要，即只提前加载当前幻灯片最近的几张幻灯片中的内容。
+预加载的幻灯片数量由 `viewDistance` 配置项决定。
+
+延迟加载支持 image、video、audio 和 iframe 元素，只需把 "src" 属性改为 "data-src" 即可。
+幻灯片中延迟加载的 iframe，会在切换到其它幻灯片时自动卸载。
+
+```html
+<section>
+  <img data-src="图片.png">
+  <iframe data-src="http://hakim.se"></iframe>
+  <video>
+    <source data-src="视频.webm" type="video/webm" />
+    <source data-src="视频.mp4" type="video/mp4" />
+  </video>
+</section>
+```
+## API
+
+``Reveal`` 对象提供了一套控制演示进度和管理演示状态的 JavaScript API：
+
+```javascript
+// 演示进度控制
+Reveal.slide( indexh, indexv, indexf );
+Reveal.left();
+Reveal.right();
+Reveal.up();
+Reveal.down();
+Reveal.prev();
+Reveal.next();
+Reveal.prevFragment();
+Reveal.nextFragment();
+
+// 打乱幻灯片顺序
+Reveal.shuffle();
+
+// 显示快捷键帮助面板
+Reveal.showHelp();
+
+// 管理演示文稿状态，传入 true/false 对应 on/off 状态
+Reveal.toggleOverview();
+Reveal.togglePause();
+Reveal.toggleAutoSlide();
+
+// 改变配置项设置
+Reveal.configure({ controls: true });
+
+// 获取当前的配置项设置
+Reveal.getConfig();
+
+// 获取当前演示文稿的缩放比例
+Reveal.getScale();
+
+// 获取上一个/当前幻灯片节点
+Reveal.getPreviousSlide();
+Reveal.getCurrentSlide();
+
+// 获取当前演示状态
+// h-横向幻灯片索引，v-纵向幻灯片索引，f-分段索引
+Reveal.getIndices(); // { h: 0, v: 0, f: 0 }
+// 获取当前演示进度
+Reveal.getProgress(); // 0-1
+// 获取幻灯片总数（包括横向幻灯片和纵向幻灯片）
+Reveal.getTotalSlides();
+
+// 获取当前幻灯片的演讲备注
+Reveal.getSlideNotes();
+
+// 状态检查
+Reveal.isFirstSlide();
+Reveal.isLastSlide();
+Reveal.isOverview();
+Reveal.isPaused();
+Reveal.isAutoSliding();
+```
+## 幻灯片切换事件
+
+幻灯片切换时会广播 'slidechanged' 事件。event 对象保存了当前幻灯片的横向索引和纵向索引、上一张幻灯片和当前幻灯片的节点引用。
+
+部分第三方库，如 MathJax（见 [#226](https://github.com/hellobugme/reveal.js/issues/226#issuecomment-10261609)），会受到幻灯片变形和显示状态的影响，此时可以尝试在该事件的回调函数中重新计算和渲染来进行修复。
+
+```javascript
+Reveal.addEventListener( 'slidechanged', function( event ) {
+  // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+} );
+```
+
+## 演示状态
+
+`getState` 方法可以获取演示文稿的当前状态，使用这个快照，可以非常方便地返回到记录的演示进度。
+
+```javascript
+// 切换到幻灯片 1
+Reveal.slide( 1 );
+
+// 获取当前状态
+var state = Reveal.getState();
+
+// 切换到幻灯片 3
+Reveal.slide( 3 );
+
+// 切回幻灯片 1
+Reveal.setState( state );
+```
+## 幻灯片状态
+
+如果给幻灯片 ``<section>`` 设置了 ``data-state="somestate"`` 属性，则当播放到该幻灯片时，"somestate" 将会出现在文档元素 ``<html>`` 的类里，可以很方便地给各个幻灯片设置不同的页面样式。
+
+此外，还可以在 JavaScript 中侦听这个状态：
+
+```javascript
+Reveal.addEventListener( 'somestate', function() {
+  // TODO: somestate 出现了，做些啥吧
+}, false );
+```
+
+## 幻灯片背景
+
+```<section>``` 元素的 ```data-background``` 属性可以设置一个覆盖整个幻灯片的背景。
+支持 4 种类型的背景：颜色，图像，视频和 iframe。
+
+### 颜色背景
+支持所有 CSS 颜色格式，如 rgba() 或 hsl()。
+```html
+<section data-background-color="#ff0000">
+  <h2> 颜色背景 </h2>
+</section>
+```
+### 图像背景
+背景图像默认会自动调整大小以覆盖整个幻灯片，可设置的选项：
+
+| 属性                         | 默认值     | 说明 |
+| :--------------------------- | :--------- | :---------- |
+| data-background-image        |            | 图片 URL（GIF 动图会在幻灯片显示时重新播放） |
+| data-background-size         | cover      | 见 MDN [background-size](https://developer.mozilla.org/docs/Web/CSS/background-size) |
+| data-background-position     | center     | 见 MDN [background-position](https://developer.mozilla.org/docs/Web/CSS/background-position) |
+| data-background-repeat       | no-repeat  | 见 MDN [background-repeat](https://developer.mozilla.org/docs/Web/CSS/background-repeat) |
+
+```html
+<section data-background-image="http://example.com/image.png">
+  <h2> 图像背景 </h2>
+</section>
+<section data-background-image="http://example.com/image.png" data-background-size="100px" data-background-repeat="repeat">
+  <h2> 背景图像尺寸为 100 像素，且平铺模式为重复 </h2>
+</section>
+```
+
+### 视频背景
+
+在幻灯片后面自动播放一个撑满页面的视频。
+
+| 属性                         | 默认值  | 说明 |
+| :--------------------------- | :------ | :---------- |
+| data-background-video        |         | 单个视频地址，或由半角逗号 ',' 分隔的视频地址列表。 |
+| data-background-video-loop   | false   | 是否循环播放 |
+| data-background-video-muted  | false   | 是否静音 |
+
+```html
+<section data-background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm" data-background-video-loop data-background-video-muted>
+  <h2> 视频背景 </h2>
+</section>
+```
+
+### Iframe 背景
+
+嵌入一个网页作为背景，该网页位于幻灯片后面的背景层，无法进行交互。
+```html
+<section data-background-iframe="https://slides.com">
+  <h2> Iframe </h2>
+</section>
+```
+
+### 背景切换过渡效果
+
+背景切换的默认过渡效果为 fade（渐变），可在初始化 ```Reveal.initialize()``` 时传入 ```backgroundTransition``` 配置项来修改，也可给 `<section>` 添加 ```data-background-transition``` 属性来给个别幻灯片单独设置。
+
 
 ---
 
