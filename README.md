@@ -699,6 +699,27 @@ Reveal.initialize({
 </section>
 ```
 
+### 内部跳转
+
+幻灯片间的跳转十分简单，下面第一个例子指定的是目标幻灯片的索引，第二个例子指定的是目标幻灯片的 ID 属性（```<section id="some-slide">```）：
+
+```html
+<a href="#/2/1"> 跳转到第 3 个横向幻灯片的第 2 个纵向幻灯片 </a>
+<a href="#/some-slide"> 跳转到 ID 为 some-slide 的幻灯片 </a>
+```
+
+也可以给元素添加下面这些类，来指定一个相对地址，类似于 reveal.js 的控制面板。
+如果指定的是一个有效的跳转地址，元素会自动附加 ```enabled``` 类。
+
+```html
+<a href="#" class="navigate-left">
+<a href="#" class="navigate-right">
+<a href="#" class="navigate-up">
+<a href="#" class="navigate-down">
+<a href="#" class="navigate-prev"> <!-- 上一张纵向幻灯片或横向幻灯片 -->
+<a href="#" class="navigate-next"> <!-- 下一张纵向幻灯片或横向幻灯片 -->
+```
+
 ---
 
 # reveal.js EN
