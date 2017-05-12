@@ -699,7 +699,7 @@ Reveal.initialize({
 </section>
 ```
 
-### 内部跳转
+## 内部跳转
 
 幻灯片间的跳转十分简单，下面第一个例子指定的是目标幻灯片的索引，第二个例子指定的是目标幻灯片的 ID 属性（```<section id="some-slide">```）：
 
@@ -720,6 +720,134 @@ Reveal.initialize({
 <a href="#" class="navigate-next"> <!-- 下一张纵向幻灯片或横向幻灯片 -->
 ```
 
+## 分段
+
+分段可用于强调幻灯片中的个别元素。演示文稿向前播放时，所有带有 ```fragment``` 类的元素，会在切换下个幻灯片之前逐个触发。[查看示例](http://lab.hakim.se/reveal-js/#/fragments)
+
+分段默认是初始隐藏，播放时渐显出现，可通过给分段追加类来修改这个效果：
+
+```html
+<section>
+  <p class="fragment grow"> 放大：初始可见，播放时放大 </p>
+  <p class="fragment shrink"> 缩小：初始可见，播放时缩小 </p>
+  <p class="fragment fade-out"> 渐隐消失：初始可见，播放时渐隐消失 </p>
+  <p class="fragment fade-up"> 渐显上升：初始隐藏，播放时渐显上升出现（down、left、right 类似） </p>
+  <p class="fragment current-visible"> 显示一次：初始隐藏，播放时出现，继续播放则消失 </p>
+  <p class="fragment highlight-current-blue"> 高亮蓝一次：初始可见，播放时变蓝，继续播放则恢复颜色 </p>
+  <p class="fragment highlight-red"> 高亮红：初始可见，播放时变红 </p>
+  <p class="fragment highlight-green"> 高亮绿：初始可见，播放时变绿 </p>
+  <p class="fragment highlight-blue"> 高亮蓝：初始可见，播放时变蓝 </p>
+</section>
+```
+
+嵌套分段会对包裹的内容逐个触发，在下面的例子中，播放时文本会先渐显出现，继续播放则文本渐隐消失。
+
+```html
+<section>
+  <span class="fragment fade-in">
+    <span class="fragment fade-out"> 我将渐显出现，然后渐隐消失 </span>
+  </span>
+</section>
+```
+
+分段的播放顺序，可以通过 ```data-fragment-index``` 属性来控制。
+
+```html
+<section>
+  <p class="fragment" data-fragment-index="3"> 最后播放 </p>
+  <p class="fragment" data-fragment-index="1"> 最先播放 </p>
+  <p class="fragment" data-fragment-index="2"> 第二个播放 </p>
+</section>
+```
+
+## 分段事件
+
+任意分段在出现和隐藏时，reveal.js 都会广播事件。
+
+部分第三方库，如 MathJax（见 #505），会受到初始隐藏的分段元素的影响，此时可以尝试在这些事件的回调函数中重新计算和渲染来进行修复。
+
+```javascript
+Reveal.addEventListener( 'fragmentshown', function( event ) {
+  // event.fragment = 分段元素节点
+} );
+Reveal.addEventListener( 'fragmenthidden', function( event ) {
+  // event.fragment = 分段元素节点
+} );
+```
+
+## 代码语法高亮
+
+Reveal 自带代码语法高亮插件 [highlight.js](https://highlightjs.org/)（需引入该依赖项）。
+在下面的例子中， clojure 代码会自动语法高亮，指定 `data-trim` 属性可以自动删除多余空格。
+HTML 默认会自动转义，要避免转义（如例子中的 `<mark>` 标签要显示出来），可以给 `<code>` 元素追加 `data-noescape` 属性。
+
+```html
+<section>
+  <pre><code data-trim data-noescape>
+(def lazy-fib
+  (concat
+   [0 1]
+   <mark>((fn rfib [a b]</mark>
+        (lazy-cons (+ a b) (rfib b (+ a b)))) 0 1)))
+  </code></pre>
+</section>
+```
+
+## 幻灯片页码
+如果想显示幻灯片页码，可以设置 ```slideNumber``` 配置项。
+
+```javascript
+// 使用默认格式显示幻灯片页码
+Reveal.configure({ slideNumber: true });
+
+// 可供选择的幻灯片页码格式：
+//  "h.v":  当前横向幻灯片页码 . 当前纵向幻灯片页码 (默认)
+//  "h/v":  当前横向幻灯片页码 / 当前纵向幻灯片页码
+//    "c":  当前幻灯片页码（包括横向幻灯片和纵向幻灯片）
+//  "c/t":  当前幻灯片页码 / 幻灯片总数
+Reveal.configure({ slideNumber: 'c/t' });
+
+```
+
+## 概览模式
+
+按 "Esc" 或 "o" 键可以打开或关闭概览模式。在概览模式中，你仍然可以在幻灯片间切换，就好像位于演示文稿的上空，操作平铺开来的幻灯片。
+与概览模式相关的 API：
+
+```javascript
+Reveal.addEventListener( 'overviewshown', function( event ) { /* ... */ } );
+Reveal.addEventListener( 'overviewhidden', function( event ) { /* ... */ } );
+
+// 通过代码打开或关闭概览模式
+Reveal.toggleOverview();
+```
+
+## 全屏模式
+按 »F« 键可以让演示文稿进入全屏模式，按 »ESC« 键退出全屏模式。
+
+
+## 嵌入媒体
+嵌入的 HTML5 `<video>`/`<audio>` 和 YouTube iframe，会在幻灯片切出时自动暂停播放，通过给元素添加 `data-ignore` 属性可以禁止该行为。
+
+给媒体元素添加 `data-autoplay` 属性，则在幻灯片显示时媒体将自动播放：
+
+```html
+<video data-autoplay src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
+```
+
+此外，框架会自动发送两条消息（见 [发送消息](https://developer.mozilla.org/en-US/docs/Web/API/Window.postMessage)）给所有的 iframe。包含 iframe 的幻灯片，显示时会给其内部所有的 iframe 发送 ```slide:start```消息，隐藏时会发送 ```slide:stop``` 消息。
+
+
+## 拉伸元素
+
+有时我们希望元素（如图像或者视频）可以自动拉伸，尽可能多的占用幻灯片的空间，这时可以给元素添加 ```.stretch``` 类：
+
+```html
+<section>
+  <h2> 这个视频将占用幻灯片的所有剩余空间 </h2>
+    <video class="stretch" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
+</section>
+```
 ---
 
 # reveal.js EN
