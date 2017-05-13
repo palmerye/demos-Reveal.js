@@ -6,30 +6,6 @@
 - [中文文档](#revealjs-中文)
 - [官方英文文档](#revealjs-en)
 
-# 工程运行指南
-
-1. Clone the reveal.js repository
-   ```sh
-   $ git clone https://github.com/palmerye/demos-Reveal.js.git
-   ```
-
-2. Navigate to the reveal.js folder
-   ```sh
-   $ cd reveal.js
-   ```
-
-3. Install dependencies
-   ```sh
-   $ npm install
-   ```
-
-4. Serve the presentation and monitor source files for changes
-   ```sh
-   $ npm start
-   ```
-
-5. Open <http://localhost:8000> to view your presentation
-
 # reveal.js 中文
 
 > 官方文档中文翻译，内容做适当删减
@@ -44,47 +20,58 @@
 - [在线编辑](#在线编辑)
 - [说明](#说明)
   - [结构](#结构)
-  - [Markdown](#markdown.)
+  - [_Markdown](#_markdown)
   - [元素属性](#元素属性)
-  - [Slide属性](#Slide属性)
+  - [幻灯片属性](#幻灯片属性)
+  - [配置 marked](#配置-marked)
 - [配置](#配置)
-- [尺寸](#尺寸)
+- [尺寸](#演示文稿尺寸)
 - [依赖](#依赖)
-- [Ready事件](#Ready事件)
-- [自动滑动](#自动滑动)
-- [键盘绑定](#键盘绑定)
-- [触摸导航](#keyboard-bindings)
-- [延迟加载](#touch-navigation)
+- [Ready事件](#ready事件)
+- [自动播放](#自动播放)
+- [自定义快捷键](#自定义快捷键)
+- [触屏操作](#触屏操作)
+- [延迟加载](#延迟加载)
 - [API](#API-CH)
   - [幻灯片更改事件](#幻灯片更改事件)
   - [演示状态](#演示状态)
   - [幻灯片状态](#幻灯片状态)
   - [幻灯片背景](#幻灯片背景)
-  - [视差背景](#视差背景)
-  - [幻灯片切换](#幻灯片切换)
-  - [内部链接](#内部链接)
+    - [颜色背景](#颜色背景)
+    - [图像背景](#图像背景)
+    - [视频背景](#视频背景)
+    - [Iframe 背景](#iframe-背景)
+    - [背景切换过渡效果](#背景切换过渡效果)
+    - [视差背景](#视差背景)
+  - [切换过渡效果](#切换过渡效果)
+  - [内部跳转](#内部跳转)
   - [片段](#片段)
   - [片段事件](#片段事件)
   - [代码语法高亮](#代码语法高亮)
   - [幻灯片页码](#幻灯片页码)
   - [概览模式](#概览模式)
   - [全屏模式](#全屏模式)
-  - [嵌入式媒体](#嵌入式媒体)
-  - [延伸元素](#延伸元素)
-  - [通信 API](#通信-API)
-- [PDF导出](#PDF导出)
+  - [嵌入媒体](#嵌入媒体)
+  - [拉伸元素](#拉伸元素)
+  - [通信 API](#通信-api)
+- [导出 PDF](#导出-pdf)
+  - [页面尺寸](#页面尺寸)
+  - [打印样式](#打印样式)
+  - [步骤](#步骤)
 - [主题](#主题)
-- [演讲者备注](#演讲者备注)
+- [演讲备注](#演讲备注)
   - [共享和打印演讲者备注](#共享和打印演讲者备注)
   - [演讲者备注服务器端](#演讲者备注服务器端)
 - [复用插件](#复用插件)
+  - [分享和打印演讲备注](#分享和打印演讲备注)
+  - [服务器端演讲备注](#服务器端演讲备注)
+  - [多路复用](#多路复用)
   - [主演示文稿](#主演示文稿)
   - [客户端演示文稿](#客户端演示文稿)
-  - [socket.io 服务器](#socket.io-服务器)
-- [MathJax](#MathJax-CH)
-- [安装](#安装)
-  - [基本设置](#基本设置)
-  - [全部设置](#全部设置)
+- [MathJax](#_mathjax)
+- [工程安装](#工程安装)
+  - [基础安装](#基础安装)
+  - [完整安装](#完整安装)
   - [目录结构](#目录结构)
 
 ## 更多功能
@@ -100,6 +87,7 @@
 
 ## 说明
 
+### 结构
 这里有一个简单的例子,充分展示了reveal.js的演示文档结构.
 ```html
 <html>
@@ -135,7 +123,7 @@
 </div>
 ```
 
-## Markdown.
+## _Markdown
 
 `reveal.js` 支持 `Markdown` 来实现内容。使用 Markdown 实现内容时，需要在 `section` 标签中添加 `data-markdown` 属性，然后将 `Markdown` 内容写到一个 `text/template` 脚本中，如下例。
 
@@ -196,7 +184,7 @@ html 注释也可以用来添加幻灯片 `<section>` 元素的属性。
 </section>
 ```
 
-### 配置 *marked*
+### 配置 marked
 
 reveal.js 使用 [marked](https://github.com/chjj/marked) 来解析 Markdown，可在设置[reveal 配置](#configuration) 时传入 marked 的配置：
 
@@ -399,7 +387,7 @@ Reveal.initialize({
 
 要使用该方式来加载依赖项，需在引入 reveal.js 之前引入 [head.js](http://headjs.com/) *(提供加载脚本功能的库)*。
 
-## 准备完成事件
+## Ready事件
 
 reveal.js 在所有非异步依赖加载完成，准备播放时，会广播 'ready' 事件。
 可调用 `Reveal.isReady()` 函数来检查 reveal.js 是否已准备完成。
@@ -480,7 +468,7 @@ Reveal.configure({
   </video>
 </section>
 ```
-## API
+## API中文
 
 ``Reveal`` 对象提供了一套控制演示进度和管理演示状态的 JavaScript API：
 
@@ -538,7 +526,7 @@ Reveal.isOverview();
 Reveal.isPaused();
 Reveal.isAutoSliding();
 ```
-## 幻灯片切换事件
+### 幻灯片切换事件
 
 幻灯片切换时会广播 'slidechanged' 事件。event 对象保存了当前幻灯片的横向索引和纵向索引、上一张幻灯片和当前幻灯片的节点引用。
 
@@ -550,7 +538,7 @@ Reveal.addEventListener( 'slidechanged', function( event ) {
 } );
 ```
 
-## 演示状态
+### 演示状态
 
 `getState` 方法可以获取演示文稿的当前状态，使用这个快照，可以非常方便地返回到记录的演示进度。
 
@@ -567,7 +555,7 @@ Reveal.slide( 3 );
 // 切回幻灯片 1
 Reveal.setState( state );
 ```
-## 幻灯片状态
+### 幻灯片状态
 
 如果给幻灯片 ``<section>`` 设置了 ``data-state="somestate"`` 属性，则当播放到该幻灯片时，"somestate" 将会出现在文档元素 ``<html>`` 的类里，可以很方便地给各个幻灯片设置不同的页面样式。
 
@@ -579,19 +567,19 @@ Reveal.addEventListener( 'somestate', function() {
 }, false );
 ```
 
-## 幻灯片背景
+### 幻灯片背景
 
 ```<section>``` 元素的 ```data-background``` 属性可以设置一个覆盖整个幻灯片的背景。
 支持 4 种类型的背景：颜色，图像，视频和 iframe。
 
-### 颜色背景
+#### 颜色背景
 支持所有 CSS 颜色格式，如 rgba() 或 hsl()。
 ```html
 <section data-background-color="#ff0000">
   <h2> 颜色背景 </h2>
 </section>
 ```
-### 图像背景
+#### 图像背景
 背景图像默认会自动调整大小以覆盖整个幻灯片，可设置的选项：
 
 | 属性                         | 默认值     | 说明 |
@@ -610,7 +598,7 @@ Reveal.addEventListener( 'somestate', function() {
 </section>
 ```
 
-### 视频背景
+#### 视频背景
 
 在幻灯片后面自动播放一个撑满页面的视频。
 
@@ -626,7 +614,7 @@ Reveal.addEventListener( 'somestate', function() {
 </section>
 ```
 
-### Iframe 背景
+#### Iframe 背景
 
 嵌入一个网页作为背景，该网页位于幻灯片后面的背景层，无法进行交互。
 ```html
@@ -635,11 +623,11 @@ Reveal.addEventListener( 'somestate', function() {
 </section>
 ```
 
-### 背景切换过渡效果
+#### 背景切换过渡效果
 
 背景切换的默认过渡效果为 fade（渐变），可在初始化 ```Reveal.initialize()``` 时传入 ```backgroundTransition``` 配置项来修改，也可给 `<section>` 添加 ```data-background-transition``` 属性来给个别幻灯片单独设置。
 
-### 视差背景
+#### 视差背景
 
 要使用视差滚动背景，需要在初始化 reveal.js 时设置下面的前两个配置项（后两个为可选项）。
 
@@ -662,9 +650,6 @@ Reveal.initialize({
 ```
 
 视差背景图尺寸必须大于幻灯片尺寸，否则切换幻灯片时无法滚动。[查看示例](http://lab.hakim.se/reveal-js/?parallaxBackgroundImage=https%3A%2F%2Fs3.amazonaws.com%2Fhakim-static%2Freveal-js%2Freveal-parallax-1.jpg&parallaxBackgroundSize=2100px%20900px)
-
-
-
 
 ### 切换过渡效果
 幻灯片的切换过渡效果，默认使用配置项 ```transition``` 设置的值，可通过 ```data-transition``` 属性来给个别幻灯片单独指定过渡效果：
@@ -699,7 +684,7 @@ Reveal.initialize({
 </section>
 ```
 
-## 内部跳转
+### 内部跳转
 
 幻灯片间的跳转十分简单，下面第一个例子指定的是目标幻灯片的索引，第二个例子指定的是目标幻灯片的 ID 属性（```<section id="some-slide">```）：
 
@@ -720,7 +705,7 @@ Reveal.initialize({
 <a href="#" class="navigate-next"> <!-- 下一张纵向幻灯片或横向幻灯片 -->
 ```
 
-## 分段
+### 片段
 
 分段可用于强调幻灯片中的个别元素。演示文稿向前播放时，所有带有 ```fragment``` 类的元素，会在切换下个幻灯片之前逐个触发。[查看示例](http://lab.hakim.se/reveal-js/#/fragments)
 
@@ -760,7 +745,7 @@ Reveal.initialize({
 </section>
 ```
 
-## 分段事件
+### 片段事件
 
 任意分段在出现和隐藏时，reveal.js 都会广播事件。
 
@@ -775,7 +760,7 @@ Reveal.addEventListener( 'fragmenthidden', function( event ) {
 } );
 ```
 
-## 代码语法高亮
+### 代码语法高亮
 
 Reveal 自带代码语法高亮插件 [highlight.js](https://highlightjs.org/)（需引入该依赖项）。
 在下面的例子中， clojure 代码会自动语法高亮，指定 `data-trim` 属性可以自动删除多余空格。
@@ -793,7 +778,7 @@ HTML 默认会自动转义，要避免转义（如例子中的 `<mark>` 标签�
 </section>
 ```
 
-## 幻灯片页码
+### 幻灯片页码
 如果想显示幻灯片页码，可以设置 ```slideNumber``` 配置项。
 
 ```javascript
@@ -809,7 +794,7 @@ Reveal.configure({ slideNumber: 'c/t' });
 
 ```
 
-## 概览模式
+### 概览模式
 
 按 "Esc" 或 "o" 键可以打开或关闭概览模式。在概览模式中，你仍然可以在幻灯片间切换，就好像位于演示文稿的上空，操作平铺开来的幻灯片。
 与概览模式相关的 API：
@@ -822,11 +807,11 @@ Reveal.addEventListener( 'overviewhidden', function( event ) { /* ... */ } );
 Reveal.toggleOverview();
 ```
 
-## 全屏模式
+### 全屏模式
 按 »F« 键可以让演示文稿进入全屏模式，按 »ESC« 键退出全屏模式。
 
 
-## 嵌入媒体
+### 嵌入媒体
 嵌入的 HTML5 `<video>`/`<audio>` 和 YouTube iframe，会在幻灯片切出时自动暂停播放，通过给元素添加 `data-ignore` 属性可以禁止该行为。
 
 给媒体元素添加 `data-autoplay` 属性，则在幻灯片显示时媒体将自动播放：
@@ -838,7 +823,7 @@ Reveal.toggleOverview();
 此外，框架会自动发送两条消息（见 [发送消息](https://developer.mozilla.org/en-US/docs/Web/API/Window.postMessage)）给所有的 iframe。包含 iframe 的幻灯片，显示时会给其内部所有的 iframe 发送 ```slide:start```消息，隐藏时会发送 ```slide:stop``` 消息。
 
 
-## 拉伸元素
+### 拉伸元素
 
 有时我们希望元素（如图像或者视频）可以自动拉伸，尽可能多的占用幻灯片的空间，这时可以给元素添加 ```.stretch``` 类：
 
@@ -855,7 +840,7 @@ Reveal.toggleOverview();
 - 每个幻灯片最多只能设置 1 个子元素
 
 
-### 发送消息 API
+### 通信 API
 框架自带一个发送消息 API ```postMessage```，可用于内嵌的演示文稿和父窗口之间的通信。
 下面的例子展示了如何让指定窗口中的 reveal.js 实例切换到幻灯片 2：
 
@@ -1023,7 +1008,7 @@ Note:
 如果启用了 `showNotes`，在 [导出 PDF](#导出-pdf) 时也会包含备注。
 备注默认打印在一个半透明的浮窗中，覆盖于幻灯片底部，如果想在该幻灯片后面单独新建一页打印备注，可以把 `showNotes` 设置为 `"separate-page"`。
 
-## 服务器端演讲备注
+### 服务器端演讲备注
 
 基于 Node.js 的演讲备注插件，让你可以在其它设备上运行你正在控制的演讲备注，就像客户端演讲备注的副本，会相互同步操作。
 需要引入以下依赖项：
@@ -1045,7 +1030,7 @@ Reveal.initialize({
 2. 执行 ```npm install```
 3. 执行 ```node plugin/notes-server```
 
-## 多路复用
+### 多路复用
 
 多路复用插件让你的听众可以在自己的手机、平板电脑或笔记本电脑上观看你正在控制的演示文稿，当你操作主演示文稿时，所有的客户端演示文稿将实时同步更新。查看示例：[https://reveal-js-multiplex-ccjbegmaii.now.sh/](https://reveal-js-multiplex-ccjbegmaii.now.sh/)。
 
@@ -1124,7 +1109,7 @@ Reveal.initialize({
 });
 ```
 
-## MathJax
+## _MathJax
 
 如果想在演示文稿中更好的显示数学公式，可以使用基于 [MathJax](http://www.mathjax.org/) 库封装的这个小插件。
 
@@ -1153,7 +1138,7 @@ Reveal.initialize({
 如果想了解 MathJax 的 [HTTPS 传输](http://docs.mathjax.org/en/latest/start.html#secure-access-to-the-cdn)方式，或为了稳定性需要使用[特定版本](http://docs.mathjax.org/en/latest/configuration.html#loading-mathjax-from-the-cdn)，请参考 MathJax 的说明文档。
 
 
-## 安装
+## 工程安装
 
 **基础安装** 适用于创建简单的演讲文稿，**完整安装** 可以使用 reveal.js 的所有特性和插件（如演讲备注）。
 
