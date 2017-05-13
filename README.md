@@ -1148,7 +1148,7 @@ Reveal.initialize({
 
 reveal.js 基础功能的安装十分简单，只需下载框架包，然后直接在浏览器中打开 index.html 文件即可。
 
-1. 在 <https://github.com/hellobugme/reveal.js/releases> 上下载 reveal.js 的最新版本
+1. 在 <https://github.com/hakimel/reveal.js/releases> 上下载 reveal.js 的最新版本
 
 2. 解压缩，然后将 index.html 里的示例内容修改为自己的内容
 
@@ -1164,7 +1164,7 @@ reveal.js 基础功能的安装十分简单，只需下载框架包，然后直�
 
 1. 克隆 reveal.js 仓库
    ```sh
-   $ git clone https://github.com/hellobugme/reveal.js.git
+   $ git clone https://github.com/palmerye/demos-Reveal.js.git
    ```
 
 1. 进入 reveal.js 目录
