@@ -1,3 +1,5 @@
+![image](http://ohce3yxd6.bkt.clouddn.com/revealjs/revealjs-zh.jpg)
+
 > This repository is forked from the official repository of revealjs.It translated by [palmerye](https://github.com/palmerye) in 2017/5/13.
 
 - [Demo 预览](http://palmerye.online/demos-Reveal.js/)
