@@ -4,7 +4,7 @@
 
 ![image](http://ohce3yxd6.bkt.clouddn.com/revealjs/revealjs-zh.jpg)
 
-> 示例： 左图为移动端，右图为PC端。完整示例：[Demo 预览](http://palmerye.online/demos-Reveal.js/)
+> 示例： 左图为移动端，右图为PC端，右下为整个slides概览（ESC键）。完整示例：[Demo 预览](http://palmerye.online/demos-Reveal.js/)
 
 - [Demo 预览](http://palmerye.online/demos-Reveal.js/)
     - 工程位于[gh-pages](https://github.com/palmerye/demos-Reveal.js/tree/gh-pages)分支
