@@ -1,3 +1,5 @@
+# reveal.js 中文
+
 > This repository is forked from the official repository of revealjs.It translated by [palmerye](https://github.com/palmerye) in 2017/5/13. welcome **star**! **star**! **star**!
 
 ![image](http://ohce3yxd6.bkt.clouddn.com/revealjs/revealjs-zh.jpg)
@@ -10,11 +12,7 @@
 - [中文文档](#revealjs-中文)
 - [官方英文文档](#revealjs-en)
 
-# reveal.js 中文
-
-> 官方文档中文翻译，内容做适当删减
-
-## 持续更新中....
+## 工具框架介绍
 
 - 一个使用 `HTML` 轻松创建精美的演示文稿框架，你只要有一个支持 `CSS 3D` 切换的浏览器(拥抱Chrome, 拒绝IE)。点击查看 [Demo](http://lab.hakim.se/reveal-js/)
 - reveal.js 配备了广泛的功能，包括嵌套幻灯片，`Markdown` 内容，`PDF` 导出，演讲笔记和 `JavaScript` API。还有一个全功能的可视化编辑器和平台,可生成在线的slide地址,有免费版和收费版：[slides.com](https://slides.com/)。
