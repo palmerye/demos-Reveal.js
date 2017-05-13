@@ -1,4 +1,4 @@
-> This repository is forked from official repository of revealjs.
+> This repository is forked from the official repository of revealjs.
 
 - [Demo 预览](http://palmerye.online/demos-Reveal.js/)
     - 工程位于[gh-pages](https://github.com/palmerye/demos-Reveal.js/tree/gh-pages)分支
@@ -848,6 +848,371 @@ Reveal.toggleOverview();
     <video class="stretch" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
 </section>
 ```
+
+限制：
+
+- 只能用于幻灯片的直接子元素
+- 每个幻灯片最多只能设置 1 个子元素
+
+
+### 发送消息 API
+框架自带一个发送消息 API ```postMessage```，可用于内嵌的演示文稿和父窗口之间的通信。
+下面的例子展示了如何让指定窗口中的 reveal.js 实例切换到幻灯片 2：
+
+```javascript
+<window>.postMessage( JSON.stringify({ method: 'slide', args: [ 2 ] }), '*' );
+```
+
+---
+**译者注**
+示例可参考 [icewind1991](https://github.com/icewind1991/reveal) 的 [plugin/postmessage](https://github.com/icewind1991/reveal/blob/master/js/public/plugin/postmessage/example.html)。
+reveal.js 已自带该特性，无需额外引入 postmessage.js 插件。
+```html
+<html>
+    <body>
+        <iframe id="reveal" src="../../index.html" style="border: 0;" width="500" height="500"></iframe>
+        <div>
+            <input id="back" type="button" value="后退"/>
+            <input id="ahead" type="button" value="前进"/>
+            <input id="slideto" type="button" value="切换到 2-2"/>
+        </div>
+        <script>
+            (function (){
+                var back = document.getElementById( 'back' ),
+                    ahead = document.getElementById( 'ahead' ),
+                    slideto = document.getElementById( 'slideto' ),
+                    reveal =  window.frames[0];
+                back.addEventListener( 'click', function () {
+                    reveal.postMessage( JSON.stringify({method: 'prev', args: []}), '*' );
+                }, false );
+                ahead.addEventListener( 'click', function (){
+                    reveal.postMessage( JSON.stringify({method: 'next', args: []}), '*' );
+                }, false );
+                slideto.addEventListener( 'click', function (){
+                    reveal.postMessage( JSON.stringify({method: 'slide', args: [2,2]}), '*' );
+                }, false );
+            }());
+        </script>
+    </body>
+</html>
+```
+---
+
+reveal.js 在 iframe 中运行时，可选择是否将其所有事件冒泡给父窗口。冒泡的事件对象为一个 JSON 字符串，保存了 3 个字段：namespace-命名空间、eventName-事件名、state-状态。
+下面的例子展示了父窗口如何向 reveal 订阅事件：
+
+```javascript
+window.addEventListener( 'message', function( event ) {
+  var data = JSON.parse( event.data );
+  if( data.namespace === 'reveal' && data.eventName ==='slidechanged' ) {
+    // 幻灯片切换，可访问 data.state 来查看幻灯片页码
+  }
+} );
+```
+
+跨窗口消息传递可通过配置项来打开或关闭。
+
+```javascript
+Reveal.initialize({
+  ...,
+
+    // 暴露 postMessage API
+  postMessage: true,
+
+    // 将演示文稿的所有事件冒泡给父窗口
+  postMessageEvents: false
+});
+```
+
+## 导出 PDF
+
+演示文稿可以通过一个特殊的打印样式来导出 PDF。该特性需要使用 [Google Chrome](http://google.com/chrome) 或 [Chromium](https://www.chromium.org/Home)、且运行于 web 服务器上时，可以导出为 PDF。
+这是一个演示文稿导出 PDF 并上传到 SlideShare 的例子：http://www.slideshare.net/hakimel/revealjs-300。
+
+### 页面尺寸
+导出的 PDF 尺寸由 [演示文稿尺寸](#演示文稿尺寸) 决定，如果幻灯片太高无法一页展示完，则会切分为多页，可通过 `pdfMaxPagesPerSlide` 配置项设置每张幻灯片最多可被切分为几数，如 `Reveal.configure({ pdfMaxPagesPerSlide: 1 })` 可确保幻灯片不会被切分。
+
+### 打印样式
+想要启用演示文稿的打印功能，需要加载一个用于打印的特殊样式 [/css/print/pdf.css](https://github.com/hakimel/reveal.js/blob/master/css/print/pdf.css)，默认的 index.html 文件已包含该逻辑，只要演示文稿的链接中带有 `print-pdf` 参数，就会自动加载。如果使用的是其它的 HTML 模板，可以在 HEAD 中插入以下代码：
+
+```html
+<script>
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+```
+### 步骤
+
+1. 给演示文稿的 URL 加上 `print-pdf` 参数，如：http://localhost:8000/?print-pdf#/ ，可以尝试这个例子 [lab.hakim.se/reveal-js?print-pdf](http://lab.hakim.se/reveal-js?print-pdf)。
+2. 打开浏览器的打印面板 (CTRL/CMD+P)。
+3. **Destination（目标打印机）** 修改为 **Save as PDF（另存为 PDF）**。
+4. **Layout（布局）** 修改为 **Landscape（横向）**。
+5. **Margins（边距）** 修改为 **None（无）**。
+6. 启用选项 **Background graphics（背景图形）**。
+7. 点击 **Save（保存）**
+
+![谷歌浏览器打印设置](https://s3.amazonaws.com/hakim-static/reveal-js/pdf-print-settings-2.png)
+
+也可使用 [decktape](https://github.com/astefanutti/decktape)（一个将 HTML5 演示文稿导出为高质量 PDF 的框架）项目代替。
+
+## 主题
+
+框架带有几个不同的主题：
+
+- black：黑色背景，白色文本，蓝色链接（默认主题）
+- white：白色背景，黑色文本，蓝色链接
+- league：灰色背景，白色文本，蓝色链接（reveal.js 3.0.0 之前版本的默认主题）
+- beige：米黄色背景，暗色（#333）文本，棕色链接
+- sky：蓝色背景，暗色文本，蓝色链接
+- night：黑色背景，亮色（#eee）文本，橙色链接
+- serif：咖啡色背景，灰色文本，褐色链接
+- simple：白色背景，黑色文本，蓝色链接
+- solarized：奶油色背景，深绿色文本，蓝色链接
+
+每个主题都是一个单独的样式文件，修改主题只需把 index.html 的主题样式中的 **black** 替换为想要的主题名即可：
+
+```html
+<link rel="stylesheet" href="css/theme/black.css" id="theme">
+```
+
+如果要增加自定义主题，请参考：[/css/theme/README.md](https://github.com/hellobugme/reveal.js/blob/master/css/theme/README.md)。
+
+## 演讲备注
+
+reveal.js 自带演讲备注插件，可以在一个单独的浏览器窗口中为每张幻灯片提供备注，同时预览下一张幻灯片。
+按 's' 键来打开备注窗口。
+
+演讲计时器会在备注窗口打开时启动，点击时间可以重置为 00:00:00。
+
+给幻灯片追加一个 ```<aside>``` 元素来添加备注，如果想用 Markdown 编写备注内容，可以给 aside 元素添加 ```data-markdown``` 属性。
+
+也可以通过幻灯片的 `data-notes` 属性来添加简单的备注，如 `<section data-notes="一些简单的备注"></section>`。
+
+如果是在本地打开演示文稿，想要使用演讲备注，需要 reveal.js [运行于一个本地 web 服务器](#完整安装).
+
+```html
+<section>
+  <h2> 我是幻灯片 </h2>
+
+  <aside class="notes">
+        大家好，我是这张幻灯片的备注，在演示文稿上是看不到，不过可以按 's' 键打开备注窗口来找我哦，么么哒~
+  </aside>
+</section>
+```
+
+对于幻灯片引入的外部 Markdown 文件，可以在指定的分隔符后面添加备注：
+
+```html
+<section data-markdown="example.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n" data-separator-notes="^Note:"></section>
+
+# 标题
+## 子标题
+
+幻灯片内容……
+
+Note:
+只会在备注窗口显示的内容……
+```
+### 分享和打印演讲备注
+
+备注只对演讲者可见，如果想让其他人也能看到，可以在初始化 reveal.js 时，把 `showNotes` 配置项设为 `true`，则备注会显示在演示文稿的底部。
+
+如果启用了 `showNotes`，在 [导出 PDF](#导出-pdf) 时也会包含备注。
+备注默认打印在一个半透明的浮窗中，覆盖于幻灯片底部，如果想在该幻灯片后面单独新建一页打印备注，可以把 `showNotes` 设置为 `"separate-page"`。
+
+## 服务器端演讲备注
+
+基于 Node.js 的演讲备注插件，让你可以在其它设备上运行你正在控制的演讲备注，就像客户端演讲备注的副本，会相互同步操作。
+需要引入以下依赖项：
+
+```javascript
+Reveal.initialize({
+  ...
+
+  dependencies: [
+    { src: 'socket.io/socket.io.js', async: true },
+    { src: 'plugin/notes-server/client.js', async: true }
+  ]
+});
+```
+
+然后：
+
+1. 安装 [Node.js](http://nodejs.org/)（4.0.0 或更新版本）
+2. 执行 ```npm install```
+3. 执行 ```node plugin/notes-server```
+
+## 多路复用
+
+多路复用插件让你的听众可以在自己的手机、平板电脑或笔记本电脑上观看你正在控制的演示文稿，当你操作主演示文稿时，所有的客户端演示文稿将实时同步更新。查看示例：[https://reveal-js-multiplex-ccjbegmaii.now.sh/](https://reveal-js-multiplex-ccjbegmaii.now.sh/)。
+
+多路复用插件需要以下 3 个部分：
+
+1. 可以控制的主演示文稿
+2. 同步更新的客户端演示文稿
+3. 用于广播主演示文稿事件给客户端演示文稿的 Socket.io 服务器
+
+更多说明：
+
+### 主演示文稿
+
+存放于只有演讲者可以访问（最好）的静态文件服务器（存放在演讲者的电脑上即可，在演讲者的电脑上运行主演示文稿会更加保险，即使会场断网，也不会打断演示。）。
+在主演示文稿目录中执行以下命令：
+
+1. ```npm install node-static```
+2. ```static```
+
+如果想在主演示文稿上使用演讲备注，需要先配置演讲备注插件，然后在主演示文稿目录中执行 ```node plugin/notes-server``` 命令。
+
+运行演讲备注/静态文件服务器，作为主控端连接 socket.io 服务器。
+
+通过 ```http://localhost:1947``` 访问主演示文稿。
+
+配置示例：
+```javascript
+Reveal.initialize({
+  // 其它配置项……
+
+  multiplex: {
+    // 示例值，使用时请自己生成，具体参考 socket.io 说明。
+    secret: '13652805320794272084', // 从 socket.io 服务器获得，允许演示文稿可以被控制
+    id: '1ea875674b17ca76', // 从 socket.io 服务器获得
+    url: 'https://reveal-js-multiplex-ccjbegmaii.now.sh' // socket.io 服务器地址
+  },
+
+  // 依赖项
+  dependencies: [
+    { src: '//cdn.socket.io/socket.io-1.3.5.js', async: true },
+    { src: 'plugin/multiplex/master.js', async: true },
+
+    // 演讲备注
+    { src: 'plugin/notes-server/client.js', async: true }
+
+    // 其它依赖项……
+  ]
+});
+```
+
+### 客户端演示文稿
+
+存放于可以公开访问的静态文件服务器，如 GitHub Pages、Amazon S3、Dreamhost、Akamai 等。
+
+使用下面的配置，当听众通过 ```http://example.com/path/to/presentation/client/index.html``` 访问演示文稿时，将作为被控端连接 socket.io 服务器。
+
+配置示例：
+```javascript
+Reveal.initialize({
+  // 其它配置项……
+
+  multiplex: {
+    // 示例值，使用时请自己生成，具体参考 socket.io 说明。
+    secret: null, // 设置为 null，演示文稿将不能被控制，而是同步 socket.io 服务器上相同 id 的主演示文稿的操作
+    id: '1ea875674b17ca76', // 从 socket.io 服务器获得
+    url: 'https://reveal-js-multiplex-ccjbegmaii.now.sh' // socket.io 服务器地址
+  },
+
+  // 依赖项
+  dependencies: [
+    { src: '//cdn.socket.io/socket.io-1.3.5.js', async: true },
+    { src: 'plugin/multiplex/client.js', async: true }
+
+    // 其它依赖项……
+  ]
+});
+```
+
+## MathJax
+
+如果想在演示文稿中更好的显示数学公式，可以使用基于 [MathJax](http://www.mathjax.org/) 库封装的这个小插件。
+
+插件默认使用 [LaTeX](http://en.wikipedia.org/wiki/LaTeX) 格式（一种基于ΤΕΧ的排版系统），可通过 ```math``` 配置项来修改。
+
+MathJax 是从远程服务器加载的，如果想离线使用，需自行下载该库，并修改 ```mathjax``` 配置项。
+
+下面是 MathJax 的配置示例（使用默认配置时，```math``` 配置项可省略）：
+
+```js
+Reveal.initialize({
+  // 其它配置项……
+
+  math: {
+    mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+    config: 'TeX-AMS_HTML-full'  // 参考 http://docs.mathjax.org/en/latest/config-files.html
+  },
+
+  dependencies: [
+    { src: 'plugin/math/math.js', async: true }
+  ]
+
+});
+```
+
+如果想了解 MathJax 的 [HTTPS 传输](http://docs.mathjax.org/en/latest/start.html#secure-access-to-the-cdn)方式，或为了稳定性需要使用[特定版本](http://docs.mathjax.org/en/latest/configuration.html#loading-mathjax-from-the-cdn)，请参考 MathJax 的说明文档。
+
+
+## 安装
+
+**基础安装** 适用于创建简单的演讲文稿，**完整安装** 可以使用 reveal.js 的所有特性和插件（如演讲备注）。
+
+### 基础安装
+
+reveal.js 基础功能的安装十分简单，只需下载框架包，然后直接在浏览器中打开 index.html 文件即可。
+
+1. 在 <https://github.com/hellobugme/reveal.js/releases> 上下载 reveal.js 的最新版本
+
+2. 解压缩，然后将 index.html 里的示例内容修改为自己的内容
+
+3. 在浏览器中打开 index.html
+
+
+### 完整安装
+
+部分 reveal.js 特性（如 Markdown 和演讲备注）需要演示文稿运行于一个本地 web 服务器。
+按照下面的步骤，可以创建一个完整的 reveal.js 开发和运行环境：
+
+1. 安装 [Node.js](http://nodejs.org/) （4.0.0 或更新版本）
+
+1. 克隆 reveal.js 仓库
+   ```sh
+   $ git clone https://github.com/hellobugme/reveal.js.git
+   ```
+
+1. 进入 reveal.js 目录
+   ```sh
+   $ cd reveal.js
+   ```
+
+1. 安装依赖
+   ```sh
+   $ npm install
+   ```
+
+1. 启动演示文稿并监控文件变更
+   ```sh
+   $ npm start
+   ```
+
+1. 打开 <http://localhost:8000> 查看演示文稿
+
+通过 `npm start -- --port=8001` 指令可修改端口号
+
+
+### 目录结构
+- **css/** 框架样式
+- **js/** 框架 JavaScript 
+- **plugin/** 用于扩展 reveal.js 的组件
+- **lib/** 第三方库（JavaScript、样式、字体）
+
+
+## 许可
+
+遵循 MIT 开源协议
+
+Copyright (C) 2016 Hakim El Hattab, http://hakim.se
+
 ---
 
 # reveal.js EN
