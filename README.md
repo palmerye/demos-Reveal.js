@@ -1,6 +1,8 @@
+> This repository is forked from the official repository of revealjs.It translated by [palmerye](https://github.com/palmerye) in 2017/5/13. welcome **star**! **star**! **star**!
+
 ![image](http://ohce3yxd6.bkt.clouddn.com/revealjs/revealjs-zh.jpg)
 
-> This repository is forked from the official repository of revealjs.It translated by [palmerye](https://github.com/palmerye) in 2017/5/13.
+> 示例： 左图为移动端，右图为PC端。完整示例：[Demo 预览](http://palmerye.online/demos-Reveal.js/)
 
 - [Demo 预览](http://palmerye.online/demos-Reveal.js/)
     - 工程位于[gh-pages](https://github.com/palmerye/demos-Reveal.js/tree/gh-pages)分支
