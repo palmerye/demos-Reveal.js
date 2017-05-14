@@ -1,5 +1,7 @@
 # reveal.js 中文文档
 
+> [文章博客地址](http://palmerye.online/RevealJs-slides%E6%BC%94%E7%A4%BA%E5%B7%A5%E5%85%B7-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/)
+
 > This repository is forked from the official repository of revealjs.It translated by [palmerye](https://github.com/palmerye) in 2017/5/13. welcome **star**! **star**! **star**!
 
 ![image](http://ohce3yxd6.bkt.clouddn.com/revealjs/revealjs-zh.jpg)
