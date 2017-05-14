@@ -127,7 +127,7 @@
 
 ## _Markdown
 
-`reveal.js` 支持 `Markdown` 来实现内容。使用 Markdown 实现内容时，需要在 `section` 标签中添加 `data-markdown` 属性，然后将 `Markdown` 内容写到一个 `text/template` 脚本中，如下例。
+`reveal.js` 支持 `Markdown` 来实现内容。使用 `Markdown` 实现内容时，需要在 `section` 标签中添加 `data-markdown` 属性，然后将 `Markdown` 内容写到一个 `text/template` 脚本中，如下例。
 
 > 这是基于 [Paul Irish](https://gist.github.com/1343518) 为了支持 [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown) 而修改的 [data-markdown](https://gist.github.com/1343518)，所以对缩进和换行符都是敏感的，应该避免tabs和空格混用，也要注意换行的使用。 
 
