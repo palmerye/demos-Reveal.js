@@ -8,5 +8,5 @@
 
 ### master分支是revealJs完整工程
 
-[demo地址](http://palmerye.online/demos-Reveal.js/)
+[demo地址](http://palmer.arkstack.cn/demos-Reveal.js/)
 
